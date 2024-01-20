@@ -1,10 +1,6 @@
 import React from "react";
-import Principal from "./src/app";
+import Home from "./src/screens/Home";
 
 export default function App() {
-  return (
-    <>
-      <Principal />
-    </>
-  );
+  return <Home />;
 }
