@@ -7,10 +7,11 @@ import {
   FlatList,
   Alert,
 } from "react-native";
-import React, { useId, useState } from "react";
+import React, { useState } from "react";
 import { styles } from "./styles";
 import Badge from "../../components/Badge";
 import Task from "../../components/Task";
+import EmptyState from "../../components/Empty";
 
 type TasksProps = {
   id: string;
@@ -20,8 +21,6 @@ type TasksProps = {
 
 export default function Home() {
   const [task, setTask] = useState("");
-  // array que vai conter as tarefas.
-  // ex [{ id: 1, title: 'tarefa', done: true ou false}]
   const [tasks, setTasks] = useState<TasksProps[]>([]);
 
   function generateUniqueId() {
@@ -113,19 +112,23 @@ export default function Home() {
             <Badge value={getCompletedTasksCount()} />
           </View>
         </View>
-
         {/* Results */}
-        <FlatList
-          data={tasks}
-          renderItem={({ item }) => (
-            <Task
-              id={item.id}
-              title={item.title}
-              onPressDone={(checked) => handleToggleTaskDone(item.id, checked)}
-              onRemove={() => handleRemoveTask(item.id)}
-            />
-          )}
-        />
+        <View>
+          <FlatList
+            data={tasks}
+            renderItem={({ item }) => (
+              <Task
+                id={item.id}
+                title={item.title}
+                onPressDone={(checked) =>
+                  handleToggleTaskDone(item.id, checked)
+                }
+                onRemove={() => handleRemoveTask(item.id)}
+              />
+            )}
+            ListEmptyComponent={() => <EmptyState />}
+          />
+        </View>
       </View>
     </>
   );
